@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KoelhoRapido_WebAPI", "KoelhoRapido_WebAPI\KoelhoRapido_WebAPI.csproj", "{08783369-39DA-42C6-83E8-B42829DA57C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KoelhoRapido.Model", "KoelhoRapido.Model\KoelhoRapido.Model.csproj", "{46EA7EC1-E245-4405-BFD1-0079050900F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoelhoRapido.WebAPI", "CoelhoRapido.WebAPI\CoelhoRapido.WebAPI.csproj", "{CFF0F233-C56B-4650-9F77-275D782462FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{08783369-39DA-42C6-83E8-B42829DA57C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{08783369-39DA-42C6-83E8-B42829DA57C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{08783369-39DA-42C6-83E8-B42829DA57C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{08783369-39DA-42C6-83E8-B42829DA57C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46EA7EC1-E245-4405-BFD1-0079050900F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46EA7EC1-E245-4405-BFD1-0079050900F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46EA7EC1-E245-4405-BFD1-0079050900F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46EA7EC1-E245-4405-BFD1-0079050900F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFF0F233-C56B-4650-9F77-275D782462FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFF0F233-C56B-4650-9F77-275D782462FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFF0F233-C56B-4650-9F77-275D782462FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFF0F233-C56B-4650-9F77-275D782462FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
