@@ -25,7 +25,12 @@ namespace KoelhoRapido.Model.Database.Repository
         {
             var tk = this.Session.Query<Token>().FirstOrDefault(f => f.Cliente.Id == c.Id);
             if (tk != null && tk.ExpirationDateTime > DateTime.Now)
+            {
+                tk.RenewToken();
+                this.Save(tk);
                 return tk;
+            }
+                
             return null;
         }
 
