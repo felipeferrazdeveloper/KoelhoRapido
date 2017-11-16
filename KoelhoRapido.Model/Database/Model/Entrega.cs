@@ -1,4 +1,5 @@
-﻿using NHibernate;
+﻿using KoelhoRapido.Model.Database.Model.Enum;
+using NHibernate;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 using System;
@@ -9,6 +10,7 @@ namespace KoelhoRapido.Model.Database.Model
 
     public class Entrega
     {
+        #region PROPERTIES
         public virtual Guid Id { get; set; }
         public virtual Endereco Origem { get; set; }
         public virtual Endereco Destino { get; set; }
@@ -17,24 +19,47 @@ namespace KoelhoRapido.Model.Database.Model
         public virtual DateTime DataPrazo { get; set; }
         public virtual IList<Volume> Volumes { get; set; }
         public virtual IList<Checkpoint> CheckPoints { get; set; }
-        public virtual String Registro
-        {
-            get
-            {
-                return Registro;
-            }
-            set
-            {
-
-            }
-        }
+        public virtual String Registro { get; set; }
         public virtual Veiculo Veiculo { get; set; }
+        #endregion
 
         public Entrega()
         {
-            Registro = new Random().ToString();
+            int x = Guid.NewGuid().ToString().GetHashCode();
+            x = x >= 0 ? x : -x;
+            Registro = Guid.NewGuid().ToString();
         }
 
+        public virtual int DeliveryTime() => Endereco.EstimatedTimeBetween(Origem, Destino);
+
+        public virtual double Budget()
+        {
+            double pricePerKilometer = Veiculo.PriceKm;
+            double pricePerMinute = Veiculo.PriceMinute;
+            double multiplicador=1;
+            switch (Veiculo.Type)
+            {
+                case TipoVeiculoEnum.Caminhão: multiplicador = 1.6;
+                    break;
+                case TipoVeiculoEnum.Carro: multiplicador = 1.0;
+                    break;
+                case TipoVeiculoEnum.Moto: multiplicador = 0.8;
+                    break;
+            }
+
+           // double distance = Endereco.DistanceBetween(this.Origem, this.Destino);
+            var time = Endereco.TimeBetweenInMinutes(this.Origem, this.Destino);
+            var distance = Endereco.DistanceBetween(this.Origem, this.Destino);
+
+            return ((distance * pricePerKilometer) + (time * pricePerMinute))*multiplicador;
+        }
+
+        public virtual void AssignVehicle()
+        {
+            var rnd = new Random();
+            this.Veiculo = new Veiculo((TipoVeiculoEnum)rnd.Next(TipoVeiculoEnum.GetNames(typeof(TipoVeiculoEnum)).Length)); 
+        }
+       
     }
 
     public class EntregaMap : ClassMapping<Entrega>

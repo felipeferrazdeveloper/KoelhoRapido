@@ -12,8 +12,7 @@ namespace KoelhoRapido.Model.Database.Model
         public virtual String Name { get; set; }
         public virtual String User { get; set; }
         public virtual String Password { get; set; }
-        public virtual IList<Endereco> Enderecos { get; set; }
-        //public virtual Token Token { get; set; }
+        public virtual IList<Endereco> Enderecos { get; set; } 
         public virtual Boolean Admin { get; set; }
         public virtual DateTime LastAuth { get; set; }
     }
@@ -26,11 +25,6 @@ namespace KoelhoRapido.Model.Database.Model
             Property(x => x.Name);
             Property(x => x.User);
             Property(x => x.Password);
-            //OneToOne(x => x.Token, m =>
-            //{
-            //    m.Lazy(LazyRelation.NoLazy); // or .NoProxy, .NoLazy
-            //    m.PropertyReference(typeof(Token).GetProperty("Cliente"));
-            //});
             Property(x => x.LastAuth, m => m.Type(NHibernateUtil.DateTime));
             Property(x => x.Admin, m => m.Type(NHibernateUtil.Boolean));
             Bag<Endereco>(x => x.Enderecos, m =>
