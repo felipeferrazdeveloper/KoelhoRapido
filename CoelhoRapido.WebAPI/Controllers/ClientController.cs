@@ -117,17 +117,17 @@ namespace CoelhoRapido.WebAPI.Controllers
 
         [AcceptVerbs("POST")]
         [Route("RequestDeliveryBudget")]
-        public Tuple<double, int> RequestDeliveryBudget(Entrega e)
+        public ValueTuple<double, int> RequestDeliveryBudget(Entrega e)
         {
             int prazo = 0;
             double budget = 0;
             if (e.Origem != null && e.Destino != null)
             {
                 prazo = e.DeliveryTime();
-                budget = e.Budget();
+                budget = Math.Round(e.Budget(), 2);
             }
-            
-            return Tuple.Create(budget, prazo);
+
+            return (budget: budget, prazo: prazo);
         }
 
         #endregion

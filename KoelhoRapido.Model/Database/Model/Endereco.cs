@@ -174,9 +174,19 @@ namespace KoelhoRapido.Model.Database.Model
                 var hourRegex = Regex.Match(direction.Duration, @"\d+ [Hh]our\w?").Value;
                 var minutesRegex = Regex.Match(direction.Duration, @"\d+ [Mm]in\w?").Value;
 
-                var days = Convert.ToInt16(Regex.Match(dayRegex, @"\d+").Value);
-                var hours = Convert.ToInt16(Regex.Match(hourRegex, @"\d+").Value);
-                var minutes = Convert.ToInt16(Regex.Match(minutesRegex, @"\d+").Value);
+                dayRegex = Regex.Match(dayRegex, @"\d+").Value;
+                hourRegex = Regex.Match(hourRegex, @"\d+").Value;
+                minutesRegex = Regex.Match(minutesRegex, @"\d+").Value;
+                int days = 0;
+                int hours = 0;
+                int minutes = 0;
+
+                if (!string.IsNullOrEmpty(dayRegex))
+                    days = Convert.ToInt16(dayRegex);
+                if (!string.IsNullOrEmpty(hourRegex))
+                    hours = Convert.ToInt16(hourRegex);
+                if (!string.IsNullOrEmpty(minutesRegex))
+                    minutes = Convert.ToInt16(minutesRegex);
 
 
                 return (days * 24 * 60) + (hours * 60) + minutes;

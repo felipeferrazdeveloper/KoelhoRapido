@@ -21,6 +21,17 @@ namespace KoelhoRapido.Model.Database.Model
         public virtual IList<Checkpoint> CheckPoints { get; set; }
         public virtual String Registro { get; set; }
         public virtual Veiculo Veiculo { get; set; }
+        public virtual int DeliveryAttempt
+        {
+            get
+            {
+                return DeliveryAttempt;
+            }
+            set
+            {
+                DeliveryAttempt++;
+            }
+        }
         #endregion
 
         public Entrega()
@@ -30,12 +41,29 @@ namespace KoelhoRapido.Model.Database.Model
             Registro = Guid.NewGuid().ToString();
         }
 
+        public virtual void Start(Veiculo veiculo, Endereco inicio)
+        {
+            var checkpoint = new Checkpoint();
+            checkpoint.Date = DateTime.Now;
+            checkpoint.Local = inicio;
+
+            if(this.Veiculo == null)
+                this.Veiculo = veiculo;
+
+            this.CheckPoints.Add(checkpoint);
+
+        }
+
         public virtual int DeliveryTime() => Endereco.EstimatedTimeBetween(Origem, Destino);
 
         public virtual double Budget()
         {
             double pricePerKilometer = Veiculo.PriceKm;
             double pricePerMinute = Veiculo.PriceMinute;
+            if (pricePerKilometer == 0)
+                pricePerKilometer = 1.5;
+            if (pricePerMinute == 0)
+                pricePerKilometer = 0.21;
             double multiplicador=1;
             switch (Veiculo.Type)
             {
@@ -47,11 +75,11 @@ namespace KoelhoRapido.Model.Database.Model
                     break;
             }
 
-           // double distance = Endereco.DistanceBetween(this.Origem, this.Destino);
             var time = Endereco.TimeBetweenInMinutes(this.Origem, this.Destino);
             var distance = Endereco.DistanceBetween(this.Origem, this.Destino);
 
             return ((distance * pricePerKilometer) + (time * pricePerMinute))*multiplicador;
+
         }
 
         public virtual void AssignVehicle()
@@ -90,6 +118,7 @@ namespace KoelhoRapido.Model.Database.Model
                 m.Type(NHibernateUtil.Date);
             });
             Property(x => x.Registro);
+            Property(x => x.DeliveryAttempt);
 
             ManyToOne(x => x.Veiculo, m =>
             {
@@ -105,7 +134,6 @@ namespace KoelhoRapido.Model.Database.Model
                 m.Inverse(true);
             },
             r => r.OneToMany());
-
 
             Bag<Checkpoint>(x => x.CheckPoints, m =>
             {
