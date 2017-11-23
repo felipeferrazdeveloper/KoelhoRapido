@@ -21,17 +21,8 @@ namespace KoelhoRapido.Model.Database.Model
         public virtual IList<Checkpoint> CheckPoints { get; set; }
         public virtual String Registro { get; set; }
         public virtual Veiculo Veiculo { get; set; }
-        public virtual int DeliveryAttempt
-        {
-            get
-            {
-                return DeliveryAttempt;
-            }
-            set
-            {
-                DeliveryAttempt++;
-            }
-        }
+        public virtual int DeliveryAttempt { get; set; }
+        
         #endregion
 
         public Entrega()
