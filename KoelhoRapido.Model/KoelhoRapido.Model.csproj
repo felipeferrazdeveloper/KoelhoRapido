@@ -45,6 +45,7 @@
     <Compile Include="Database\Model\Endereco.cs" />
     <Compile Include="Database\Model\Entrega.cs" />
     <Compile Include="Database\Model\Enum\Enums.cs" />
+    <Compile Include="Database\Model\TipoVeiculo.cs" />
     <Compile Include="Database\Model\Token.cs" />
     <Compile Include="Database\Model\Veiculo.cs" />
     <Compile Include="Database\Model\Volume.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Database\Repository\RepositoryCliente.cs" />
     <Compile Include="Database\Repository\RepositoryEndereco.cs" />
     <Compile Include="Database\Repository\RepositoryEntrega.cs" />
+    <Compile Include="Database\Repository\RepositoryTipoVeiculo.cs" />
     <Compile Include="Database\Repository\RepositoryToken.cs" />
     <Compile Include="Database\Repository\RepositoryVeiculo.cs" />
     <Compile Include="Database\Repository\RepositoryVolume.cs" />
@@ -87,9 +89,15 @@
     <Reference Include="Remotion.Linq.EagerFetching, Version=2.1.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
       <HintPath>..\packages\Remotion.Linq.EagerFetching.2.1.0\lib\net45\Remotion.Linq.EagerFetching.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="docs\MySqlCommand.xml" />

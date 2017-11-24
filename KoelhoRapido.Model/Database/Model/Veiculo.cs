@@ -10,25 +10,16 @@ namespace KoelhoRapido.Model.Database.Model
     {
         #region PROPERTIES
         public virtual Guid Id { get; set; }
-        public virtual TipoVeiculoEnum Type { get; set; }
         public virtual String CarPlate { get; set; }
-        public virtual double PriceMinute { get; set; }
-        public virtual double PriceKm { get; set; }
-        public virtual double Volume { get; set; }
+        public virtual TipoVeiculo Type { get; set; }
         public virtual IList<Entrega> Entregas { get; set; }
         public virtual bool Available { get; set; }
         #endregion
 
-        public Veiculo() { }
-
-        public Veiculo(TipoVeiculoEnum type)
+        public Veiculo()
         {
-            this.Type = type;
+            this.Type = new TipoVeiculo();
         }
-        
-
-       
-
     }
 
     public class VeiculoMap : ClassMapping<Veiculo>
@@ -36,12 +27,8 @@ namespace KoelhoRapido.Model.Database.Model
         public VeiculoMap()
         {
             Id(x => x.Id, m => m.Generator(Generators.Guid));
-            Property(x => x.Type);
             Property(x => x.CarPlate);
-            Property(x => x.PriceMinute);
-            Property(x => x.PriceKm);
-            Property(x => x.Volume);
-
+            
             Bag<Entrega>(x => x.Entregas, m =>
             {
                 m.Cascade(Cascade.All);
@@ -50,6 +37,11 @@ namespace KoelhoRapido.Model.Database.Model
                 m.Inverse(true);
             },
             r => r.OneToMany());
+
+            ManyToOne(x => x.Type, m =>
+            {
+                m.Column("idTipoVeiculo");
+            });
         }
     }
 }

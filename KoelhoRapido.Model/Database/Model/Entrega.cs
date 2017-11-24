@@ -49,14 +49,14 @@ namespace KoelhoRapido.Model.Database.Model
 
         public virtual double Budget()
         {
-            double pricePerKilometer = Veiculo.PriceKm;
-            double pricePerMinute = Veiculo.PriceMinute;
+            double pricePerKilometer = Veiculo.Type.PriceKm;
+            double pricePerMinute = Veiculo.Type.PriceMinute;
             if (pricePerKilometer == 0)
                 pricePerKilometer = 1.5;
             if (pricePerMinute == 0)
                 pricePerKilometer = 0.21;
             double multiplicador=1;
-            switch (Veiculo.Type)
+            switch (Veiculo.Type.Type)
             {
                 case TipoVeiculoEnum.Caminhão: multiplicador = 1.6;
                     break;
@@ -70,13 +70,6 @@ namespace KoelhoRapido.Model.Database.Model
             var distance = Endereco.DistanceBetween(this.Origem, this.Destino);
 
             return ((distance * pricePerKilometer) + (time * pricePerMinute))*multiplicador;
-
-        }
-
-        public virtual void AssignVehicle()
-        {
-            var rnd = new Random();
-            this.Veiculo = new Veiculo((TipoVeiculoEnum)rnd.Next(TipoVeiculoEnum.GetNames(typeof(TipoVeiculoEnum)).Length)); 
         }
        
     }
