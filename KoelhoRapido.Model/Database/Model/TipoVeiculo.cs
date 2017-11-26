@@ -35,7 +35,6 @@ namespace KoelhoRapido.Model.Database.Model
                 m.Cascade(Cascade.All);
                 m.Key(k => k.Column("idTipoVeiculo"));
                 m.Lazy(CollectionLazy.NoLazy);
-                m.Inverse(true);
             },
             r => r.OneToMany());
         }

@@ -28,7 +28,8 @@ namespace CoelhoRapido.WebAPI.Controllers
         {
             try
             {
-                return DBConfig.Instance.RepositoryTipoVeiculo.FindAll();
+                var retorno = DBConfig.Instance.RepositoryTipoVeiculo.FindAll();
+                return retorno;
             }
             catch (Exception ex)
             {
@@ -51,13 +52,13 @@ namespace CoelhoRapido.WebAPI.Controllers
 
         [AcceptVerbs("POST")]
         [Route("NewVehicleWithTypeId")]
-        public void NewVehicleWithType(Veiculo v, Guid idType)
+        public void NewVehicleWithType(Veiculo veiculo, Guid idType)
         {
             try
             {
                 var type = DBConfig.Instance.RepositoryTipoVeiculo.FindById(idType);
-                v.Type = type;
-                DBConfig.Instance.RepositoryVeiculo.Save(v);
+                veiculo.Type = type;
+                DBConfig.Instance.RepositoryVeiculo.Save(veiculo);
             }
             catch (Exception ex)
             {
