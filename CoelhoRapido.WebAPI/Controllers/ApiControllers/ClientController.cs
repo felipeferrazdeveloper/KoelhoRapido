@@ -124,7 +124,7 @@ namespace CoelhoRapido.WebAPI.Controllers
             if (e.Origem != null && e.Destino != null)
             {
                 prazo = e.DeliveryTime();
-                budget = Math.Round(e.Budget(), 2);
+                budget = 0; Math.Round(e.Budget(), 2);
             }
 
             return (budget: budget, prazo: prazo);

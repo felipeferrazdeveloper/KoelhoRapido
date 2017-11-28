@@ -1,4 +1,5 @@
 ﻿using KoelhoRapido.Model.Database.Model.Enum;
+using Newtonsoft.Json;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 using System;
@@ -17,6 +18,7 @@ namespace KoelhoRapido.Model.Database.Model
         public virtual double PriceMinute { get; set; }
         public virtual double PriceKm { get; set; }
         public virtual double Volume { get; set; }
+        [JsonIgnore]
         public virtual IList<Veiculo> Veiculos { get; set; }
     }
 
@@ -35,6 +37,7 @@ namespace KoelhoRapido.Model.Database.Model
                 m.Cascade(Cascade.All);
                 m.Key(k => k.Column("idTipoVeiculo"));
                 m.Lazy(CollectionLazy.NoLazy);
+                m.Inverse(true);
             },
             r => r.OneToMany());
         }

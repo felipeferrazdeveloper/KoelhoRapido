@@ -1,4 +1,5 @@
 ﻿using KoelhoRapido.Model.Database.Model.Enum;
+using Newtonsoft.Json;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 using System;
@@ -11,7 +12,9 @@ namespace KoelhoRapido.Model.Database.Model
         #region PROPERTIES
         public virtual Guid Id { get; set; }
         public virtual String CarPlate { get; set; }
+        [JsonIgnore]
         public virtual TipoVeiculo Type { get; set; }
+        [JsonIgnore]
         public virtual IList<Entrega> Entregas { get; set; }
         public virtual bool Available { get; set; }
         #endregion
@@ -28,7 +31,7 @@ namespace KoelhoRapido.Model.Database.Model
         {
             Id(x => x.Id, m => m.Generator(Generators.Guid));
             Property(x => x.CarPlate);
-            
+
             Bag<Entrega>(x => x.Entregas, m =>
             {
                 m.Cascade(Cascade.All);
@@ -41,6 +44,7 @@ namespace KoelhoRapido.Model.Database.Model
             ManyToOne(x => x.Type, m =>
             {
                 m.Column("idTipoVeiculo");
+                m.Lazy(LazyRelation.Proxy);
             });
         }
     }

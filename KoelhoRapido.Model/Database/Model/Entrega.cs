@@ -55,23 +55,26 @@ namespace KoelhoRapido.Model.Database.Model
                 pricePerKilometer = 1.5;
             if (pricePerMinute == 0)
                 pricePerKilometer = 0.21;
-            double multiplicador=1;
+            double multiplicador = 1;
             switch (Veiculo.Type.Type)
             {
-                case TipoVeiculoEnum.Caminhão: multiplicador = 1.6;
+                case TipoVeiculoEnum.Caminhão:
+                    multiplicador = 1.6;
                     break;
-                case TipoVeiculoEnum.Carro: multiplicador = 1.0;
+                case TipoVeiculoEnum.Carro:
+                    multiplicador = 1.0;
                     break;
-                case TipoVeiculoEnum.Moto: multiplicador = 0.8;
+                case TipoVeiculoEnum.Moto:
+                    multiplicador = 0.8;
                     break;
             }
 
             var time = Endereco.TimeBetweenInMinutes(this.Origem, this.Destino);
             var distance = Endereco.DistanceBetween(this.Origem, this.Destino);
 
-            return ((distance * pricePerKilometer) + (time * pricePerMinute))*multiplicador;
+            return ((distance * pricePerKilometer) + (time * pricePerMinute)) * multiplicador;
         }
-       
+
     }
 
     public class EntregaMap : ClassMapping<Entrega>
@@ -114,7 +117,7 @@ namespace KoelhoRapido.Model.Database.Model
             {
                 m.Cascade(Cascade.All);
                 m.Key(k => k.Column("idEntrega"));
-                m.Lazy(CollectionLazy.NoLazy);
+                m.Lazy(CollectionLazy.Lazy);
                 m.Inverse(true);
             },
             r => r.OneToMany());
@@ -123,7 +126,7 @@ namespace KoelhoRapido.Model.Database.Model
             {
                 m.Cascade(Cascade.All);
                 m.Key(k => k.Column("idCheckpoint"));
-                m.Lazy(CollectionLazy.NoLazy);
+                m.Lazy(CollectionLazy.Lazy);
                 m.Inverse(true);
             },
             r => r.OneToMany());

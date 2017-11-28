@@ -68,11 +68,12 @@ namespace CoelhoRapido.WebAPI.Controllers
 
         [AcceptVerbs("GET")]
         [Route("GetVehicles")]
-        public IList<Veiculo> GetVehicles()
+        public IEnumerable<Veiculo> GetVehicles()
         {
             try
             {
-                return DBConfig.Instance.RepositoryVeiculo.FindAll();
+                var veiculos = DBConfig.Instance.RepositoryVeiculo.FindAll();
+                return veiculos;
             }
             catch (Exception ex)
             {
