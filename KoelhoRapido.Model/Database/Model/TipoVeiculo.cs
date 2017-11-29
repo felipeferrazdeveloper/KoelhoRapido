@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace KoelhoRapido.Model.Database.Model
 {
+    [JsonObject]
     public class TipoVeiculo
     {
         public virtual Guid Id { get; set; }

@@ -7,14 +7,13 @@ using System.Collections.Generic;
 
 namespace KoelhoRapido.Model.Database.Model
 {
+    [JsonObject]
     public class Veiculo
     {
         #region PROPERTIES
         public virtual Guid Id { get; set; }
         public virtual String CarPlate { get; set; }
-        [JsonIgnore]
         public virtual TipoVeiculo Type { get; set; }
-        [JsonIgnore]
         public virtual IList<Entrega> Entregas { get; set; }
         public virtual bool Available { get; set; }
         #endregion
@@ -44,7 +43,7 @@ namespace KoelhoRapido.Model.Database.Model
             ManyToOne(x => x.Type, m =>
             {
                 m.Column("idTipoVeiculo");
-                m.Lazy(LazyRelation.Proxy);
+                m.Lazy(LazyRelation.NoLazy);
             });
         }
     }

@@ -1,6 +1,7 @@
 ﻿
 using GoogleMaps.LocationServices;
 using KoelhoRapido.Model.Database.Model.Enum;
+using Newtonsoft.Json;
 using NHibernate;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
@@ -9,6 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace KoelhoRapido.Model.Database.Model
 {
+    [JsonObject]
     public class Endereco
     {
         #region PROPERTIES

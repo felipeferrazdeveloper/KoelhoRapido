@@ -104,7 +104,7 @@ namespace KoelhoRapido.Model.Database
                 config.DataBaseIntegration(db =>
                 {
                         //dialeto do SQL
-                        db.Dialect<NHibernate.Dialect.MySQL5Dialect>();
+                        db.Dialect<NHibernate.Dialect.MySQLDialect>();
                         //string de conexao
                         db.ConnectionString = stringConexao;
                         //driver de conexao

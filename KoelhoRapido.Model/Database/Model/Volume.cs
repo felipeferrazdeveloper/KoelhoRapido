@@ -1,11 +1,13 @@
-﻿using NHibernate.Mapping.ByCode;
+﻿using Newtonsoft.Json;
+using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 using System;
 
 namespace KoelhoRapido.Model.Database.Model
 {
+    [JsonObject]
     public class Volume
-    {
+    {   
         public virtual Guid Id { get; set; }
         public virtual String Descricao { get; set; }
         public virtual Double ValorDeclarado { get; set; }
