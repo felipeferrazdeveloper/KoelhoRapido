@@ -22,8 +22,6 @@ namespace KoelhoRapido.Model.Database.Repository
             if (c != null)
             {
                 c.LastAuth = DateTime.Now;
-                var token = new Token(c);
-                DBConfig.Instance.RepositoryToken.Save(token);
                 this.Save(c);
             }
 

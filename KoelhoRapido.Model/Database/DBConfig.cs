@@ -30,7 +30,7 @@ namespace KoelhoRapido.Model.Database
         public RepositoryToken RepositoryToken { get; set; }
         public RepositoryVeiculo RepositoryVeiculo { get; set; }
         public RepositoryVolume RepositoryVolume { get; set; }
-
+        public RepositoryTipoVeiculo RepositoryTipoVeiculo { get; set; }
         private DBConfig()
         {
             Conectar();
@@ -41,6 +41,7 @@ namespace KoelhoRapido.Model.Database
             this.RepositoryToken = new RepositoryToken(Session);
             this.RepositoryVeiculo = new RepositoryVeiculo(Session);
             this.RepositoryVolume = new RepositoryVolume(Session);
+            this.RepositoryTipoVeiculo = new RepositoryTipoVeiculo(Session);
         }
 
         public static DBConfig Instance

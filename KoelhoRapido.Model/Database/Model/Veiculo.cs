@@ -1,23 +1,27 @@
 ﻿using KoelhoRapido.Model.Database.Model.Enum;
+using Newtonsoft.Json;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KoelhoRapido.Model.Database.Model
 {
+    [JsonObject]
     public class Veiculo
     {
+        #region PROPERTIES
         public virtual Guid Id { get; set; }
-        public virtual TipoVeiculoEnum Type { get; set; }
         public virtual String CarPlate { get; set; }
-        public virtual double PriceMinute { get; set; }
-        public virtual double PriceKm { get; set; }
-        public virtual double Volume { get; set; }
+        public virtual TipoVeiculo Type { get; set; }
         public virtual IList<Entrega> Entregas { get; set; }
+        public virtual bool Available { get; set; }
+        #endregion
+
+        public Veiculo()
+        {
+            this.Type = new TipoVeiculo();
+        }
     }
 
     public class VeiculoMap : ClassMapping<Veiculo>
@@ -25,11 +29,7 @@ namespace KoelhoRapido.Model.Database.Model
         public VeiculoMap()
         {
             Id(x => x.Id, m => m.Generator(Generators.Guid));
-            Property(x => x.Type);
             Property(x => x.CarPlate);
-            Property(x => x.PriceMinute);
-            Property(x => x.PriceKm);
-            Property(x => x.Volume);
 
             Bag<Entrega>(x => x.Entregas, m =>
             {
@@ -39,6 +39,12 @@ namespace KoelhoRapido.Model.Database.Model
                 m.Inverse(true);
             },
             r => r.OneToMany());
+
+            ManyToOne(x => x.Type, m =>
+            {
+                m.Column("idTipoVeiculo");
+                m.Lazy(LazyRelation.NoLazy);
+            });
         }
     }
 }

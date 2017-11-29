@@ -1,4 +1,6 @@
-﻿using NHibernate;
+﻿using KoelhoRapido.Model.Database.Model.Enum;
+using Newtonsoft.Json;
+using NHibernate;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 using System;
@@ -6,9 +8,10 @@ using System.Collections.Generic;
 
 namespace KoelhoRapido.Model.Database.Model
 {
-
+    [JsonObject]
     public class Entrega
     {
+        #region PROPERTIES
         public virtual Guid Id { get; set; }
         public virtual Endereco Origem { get; set; }
         public virtual Endereco Destino { get; set; }
@@ -17,22 +20,60 @@ namespace KoelhoRapido.Model.Database.Model
         public virtual DateTime DataPrazo { get; set; }
         public virtual IList<Volume> Volumes { get; set; }
         public virtual IList<Checkpoint> CheckPoints { get; set; }
-        public virtual String Registro
-        {
-            get
-            {
-                return Registro;
-            }
-            set
-            {
-
-            }
-        }
+        public virtual String Registro { get; set; }
         public virtual Veiculo Veiculo { get; set; }
+        public virtual int DeliveryAttempt { get; set; }
+        
+        #endregion
 
         public Entrega()
         {
-            Registro = new Random().ToString();
+            int x = Guid.NewGuid().ToString().GetHashCode();
+            x = x >= 0 ? x : -x;
+            Registro = Guid.NewGuid().ToString();
+        }
+
+        public virtual void Start(Veiculo veiculo, Endereco inicio)
+        {
+            var checkpoint = new Checkpoint();
+            checkpoint.Date = DateTime.Now;
+            checkpoint.Local = inicio;
+
+            if(this.Veiculo == null)
+                this.Veiculo = veiculo;
+
+            this.CheckPoints.Add(checkpoint);
+
+        }
+
+        public virtual int DeliveryTime() => Endereco.EstimatedTimeBetween(Origem, Destino);
+
+        public virtual double Budget()
+        {
+            double pricePerKilometer = Veiculo.Type.PriceKm;
+            double pricePerMinute = Veiculo.Type.PriceMinute;
+            if (pricePerKilometer == 0)
+                pricePerKilometer = 1.5;
+            if (pricePerMinute == 0)
+                pricePerKilometer = 0.21;
+            double multiplicador = 1;
+            switch (Veiculo.Type.Type)
+            {
+                case TipoVeiculoEnum.Caminhão:
+                    multiplicador = 1.6;
+                    break;
+                case TipoVeiculoEnum.Carro:
+                    multiplicador = 1.0;
+                    break;
+                case TipoVeiculoEnum.Moto:
+                    multiplicador = 0.8;
+                    break;
+            }
+
+            var time = Endereco.TimeBetweenInMinutes(this.Origem, this.Destino);
+            var distance = Endereco.DistanceBetween(this.Origem, this.Destino);
+
+            return ((distance * pricePerKilometer) + (time * pricePerMinute)) * multiplicador;
         }
 
     }
@@ -65,6 +106,7 @@ namespace KoelhoRapido.Model.Database.Model
                 m.Type(NHibernateUtil.Date);
             });
             Property(x => x.Registro);
+            Property(x => x.DeliveryAttempt);
 
             ManyToOne(x => x.Veiculo, m =>
             {
@@ -76,17 +118,16 @@ namespace KoelhoRapido.Model.Database.Model
             {
                 m.Cascade(Cascade.All);
                 m.Key(k => k.Column("idEntrega"));
-                m.Lazy(CollectionLazy.NoLazy);
+                m.Lazy(CollectionLazy.Lazy);
                 m.Inverse(true);
             },
             r => r.OneToMany());
-
 
             Bag<Checkpoint>(x => x.CheckPoints, m =>
             {
                 m.Cascade(Cascade.All);
                 m.Key(k => k.Column("idCheckpoint"));
-                m.Lazy(CollectionLazy.NoLazy);
+                m.Lazy(CollectionLazy.Lazy);
                 m.Inverse(true);
             },
             r => r.OneToMany());

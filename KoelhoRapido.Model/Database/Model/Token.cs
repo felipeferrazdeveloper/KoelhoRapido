@@ -14,13 +14,13 @@ namespace KoelhoRapido.Model.Database.Model
 
         public Token()
         {
-            this.ExpirationDateTime = DateTime.Now;
+            ExpirationDateTime = DateTime.Now;
         }
 
         public Token(Cliente cliente)
         {
             this.Cliente = cliente;
-            this.Value = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            this.RenewToken();
             this.ExpirationDateTime = DateTime.Now.AddMinutes(25);
         }
 
@@ -29,6 +29,8 @@ namespace KoelhoRapido.Model.Database.Model
             var now = new DateTime();
             return now < ExpirationDateTime ? true : false;
         }
+
+        public virtual void RenewToken() => Value = Guid.NewGuid().ToString("n");
     }
 
     public class TokenMap : ClassMapping<Token>
@@ -40,8 +42,8 @@ namespace KoelhoRapido.Model.Database.Model
             Property(x => x.ExpirationDateTime, m => m.Type(NHibernateUtil.DateTime));
             ManyToOne(x => x.Cliente, map =>
             {
-                map.Column("idToken");
-                map.Lazy(LazyRelation.Proxy);
+                map.Column("idCliente");
+                map.Lazy(LazyRelation.NoLazy);
             });
         }
     }
