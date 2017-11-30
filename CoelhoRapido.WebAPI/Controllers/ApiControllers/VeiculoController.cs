@@ -43,7 +43,11 @@ namespace CoelhoRapido.WebAPI.Controllers
         {
             try
             {
-                DBConfig.Instance.RepositoryVeiculo.Save(v);
+                if (v.Type != null)
+                    DBConfig.Instance.RepositoryVeiculo.Save(v);
+                else
+                    throw new Exception("Vehicle must have a type!");
+
             }catch(Exception ex)
             {
                 throw ex;
@@ -58,7 +62,7 @@ namespace CoelhoRapido.WebAPI.Controllers
             {
                 var type = DBConfig.Instance.RepositoryTipoVeiculo.FindById(idType);
                 veiculo.Type = type;
-                DBConfig.Instance.RepositoryVeiculo.Save(veiculo);
+                this.NewVehicle(veiculo);
             }
             catch (Exception ex)
             {

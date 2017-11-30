@@ -107,7 +107,10 @@ namespace CoelhoRapido.WebAPI.Controllers
         [Route("NewAddress")]
         public void NewAddress(Endereco e, string token)
         {
-            var c = DBConfig.Instance.RepositoryToken.FindByValue(token).Cliente;
+            var tk = DBConfig.Instance.RepositoryToken.FindByValue(token);
+            if (tk == null)
+                throw new Exception("Token Invalido");
+            Cliente c = tk.Cliente;
             c.Enderecos.Add(e);
             DBConfig.Instance.RepositoryCliente.Save(c);
         }

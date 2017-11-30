@@ -17,6 +17,11 @@ namespace KoelhoRapido.Model.Database.Model
         public virtual IList<Endereco> Enderecos { get; set; } 
         public virtual Boolean Admin { get; set; }
         public virtual DateTime LastAuth { get; set; }
+
+        public Cliente()
+        {
+            Enderecos = new List<Endereco>();
+        }
     }
 
     public class ClienteMap : ClassMapping<Cliente>
