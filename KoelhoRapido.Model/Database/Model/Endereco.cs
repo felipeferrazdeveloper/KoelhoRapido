@@ -14,7 +14,7 @@ namespace KoelhoRapido.Model.Database.Model
     public class Endereco
     {
         #region PROPERTIES
-        public virtual Guid Id { get; set; }
+        public virtual int Id { get; set; }
         public virtual String Address { get; set; }
         public virtual String Complements { get; set; }
         public virtual String Zip { get; set; }
@@ -207,7 +207,7 @@ namespace KoelhoRapido.Model.Database.Model
     {
         public EnderecoMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.Guid));
+            Id(x => x.Id, m => m.Generator(Generators.Increment));
             Property(x => x.Address);
             Property(x => x.City);
             Property(x => x.Complements);

@@ -13,7 +13,7 @@ namespace KoelhoRapido.Model.Database.Model
     [JsonObject]
     public class Checkpoint
     {
-        public virtual Guid Id { get; set; }
+        public virtual int Id { get; set; }
         public virtual Entrega Entrega { get; set; }
         public virtual DateTime Date { get; set; }
         public virtual Endereco Local { get; set; }
@@ -23,7 +23,7 @@ namespace KoelhoRapido.Model.Database.Model
     {
         public CheckpointMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.Guid));
+            Id(x => x.Id, m => m.Generator(Generators.Increment));
             Property(x => x.Date, m => m.Type(NHibernateUtil.DateTime));
             OneToOne(x => x.Local, m =>
             {

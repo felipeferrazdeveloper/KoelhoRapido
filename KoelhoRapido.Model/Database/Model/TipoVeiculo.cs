@@ -13,7 +13,7 @@ namespace KoelhoRapido.Model.Database.Model
     [JsonObject]
     public class TipoVeiculo
     {
-        public virtual Guid Id { get; set; }
+        public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual TipoVeiculoEnum Type { get; set; }
         public virtual double PriceMinute { get; set; }
@@ -27,7 +27,7 @@ namespace KoelhoRapido.Model.Database.Model
     {
         public TipoVeiculoMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.Guid));
+            Id(x => x.Id, m => m.Generator(Generators.Increment));
             Property(x => x.Name);
             Property(x => x.Type);
             Property(x => x.PriceMinute);

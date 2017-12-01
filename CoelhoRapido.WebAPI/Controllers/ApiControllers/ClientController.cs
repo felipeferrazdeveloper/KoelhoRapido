@@ -73,6 +73,8 @@ namespace CoelhoRapido.WebAPI.Controllers
         {
             if (c != null)
                 DBConfig.Instance.RepositoryCliente.Save(c);
+            else
+                throw new Exception("Cliente is Empty!");
         }
 
         /// <summary>
@@ -82,7 +84,7 @@ namespace CoelhoRapido.WebAPI.Controllers
         /// <param name="token"></param>
         [AcceptVerbs("DELETE")]
         [Route("Delete")]
-        public void Delete(Guid id, string token)
+        public void Delete(int id, string token)
         {
             Cliente c = DBConfig.Instance.RepositoryCliente.FindById(id);
             Token tk = DBConfig.Instance.RepositoryToken.FindByValue(token);

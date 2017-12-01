@@ -14,7 +14,7 @@ namespace CoelhoRapido.WebAPI.Controllers
     {
 
         [Route("SetCheckPoint")]
-        public void SetCheckPoint(Endereco endereco, Guid idEntrega)
+        public void SetCheckPoint(Endereco endereco, int idEntrega)
         {
             var entrega = DBConfig.Instance.RepositoryEntrega.FindById(idEntrega);
             var checkpoint = new Checkpoint();
@@ -26,7 +26,7 @@ namespace CoelhoRapido.WebAPI.Controllers
         }
 
         [Route("StartDelivery")]
-        public void StartDelivery(Guid idEntrega, Veiculo v, Endereco origem)
+        public void StartDelivery(int idEntrega, Veiculo v, Endereco origem)
         {
             var entrega = DBConfig.Instance.RepositoryEntrega.FindById(idEntrega);
             entrega.Start(v, origem);
@@ -34,7 +34,7 @@ namespace CoelhoRapido.WebAPI.Controllers
         }
 
         [Route("SetDeliveredStatus")]
-        public void SetDeliveredStatus(Boolean status, int attempts, Guid idEntrega)
+        public void SetDeliveredStatus(Boolean status, int attempts, int idEntrega)
         {
             var entrega = DBConfig.Instance.RepositoryEntrega.FindById(idEntrega);
             if (status)

@@ -11,7 +11,7 @@ namespace KoelhoRapido.Model.Database.Model
     public class Veiculo
     {
         #region PROPERTIES
-        public virtual Guid Id { get; set; }
+        public virtual int Id { get; set; }
         public virtual String CarPlate { get; set; }
         public virtual TipoVeiculo Type { get; set; }
         public virtual IList<Entrega> Entregas { get; set; }
@@ -28,7 +28,7 @@ namespace KoelhoRapido.Model.Database.Model
     {
         public VeiculoMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.Guid));
+            Id(x => x.Id, m => m.Generator(Generators.Increment));
             Property(x => x.CarPlate);
 
             Bag<Entrega>(x => x.Entregas, m =>

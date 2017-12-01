@@ -12,7 +12,7 @@ namespace KoelhoRapido.Model.Database.Model
     public class Entrega
     {
         #region PROPERTIES
-        public virtual Guid Id { get; set; }
+        public virtual int Id { get; set; }
         public virtual Endereco Origem { get; set; }
         public virtual Endereco Destino { get; set; }
         public virtual DateTime DataRetirada { get; set; }
@@ -82,7 +82,7 @@ namespace KoelhoRapido.Model.Database.Model
     {
         public EntregaMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.Guid));
+            Id(x => x.Id, m => m.Generator(Generators.Increment));
             OneToOne(x => x.Origem, m =>
             {
                 m.Lazy(LazyRelation.NoLazy); // or .NoProxy, .NoLazy

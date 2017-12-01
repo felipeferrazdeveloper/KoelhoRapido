@@ -7,10 +7,10 @@ using System.Collections.Generic;
 
 namespace KoelhoRapido.Model.Database.Model
 {
-    [JsonObject]
+    
     public class Cliente
     {
-        public virtual Guid Id { get; set; }
+        public virtual int Id { get; set; }
         public virtual String Name { get; set; }
         public virtual String User { get; set; }
         public virtual String Password { get; set; }
@@ -28,7 +28,7 @@ namespace KoelhoRapido.Model.Database.Model
     {
         public ClienteMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.Guid));
+            Id(x => x.Id, m => m.Generator(Generators.Increment));
             Property(x => x.Name);
             Property(x => x.User);
             Property(x => x.Password);

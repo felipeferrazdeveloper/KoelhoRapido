@@ -28,7 +28,7 @@ namespace CoelhoRapido.WebAPI.Controllers
 
         [AcceptVerbs("GET")]
         [Route("GetCheckpointsStops")]
-        public IList<Checkpoint> GetCheckpoints(Guid idEntrega)
+        public IList<Checkpoint> GetCheckpoints(int idEntrega)
         {
             try
             {

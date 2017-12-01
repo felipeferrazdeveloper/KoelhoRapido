@@ -24,7 +24,7 @@ namespace CoelhoRapido.WebAPI.Controllers
 
         [AcceptVerbs("GET")]
         [Route("GetTypes")]
-        public IList<TipoVeiculo> GetTypes()
+        public IEnumerable<TipoVeiculo> GetTypes()
         {
             try
             {
@@ -56,7 +56,7 @@ namespace CoelhoRapido.WebAPI.Controllers
 
         [AcceptVerbs("POST")]
         [Route("NewVehicleWithTypeId")]
-        public void NewVehicleWithType(Veiculo veiculo, Guid idType)
+        public void NewVehicleWithType(Veiculo veiculo, int idType)
         {
             try
             {

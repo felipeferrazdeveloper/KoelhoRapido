@@ -67,12 +67,12 @@ namespace KoelhoRapido.Model.Database.Repository
             }
         }
 
-        public T FindFirstById(Guid id)
+        public T FindFirstById(int id)
         {
             return this.Session.CreateCriteria<T>().Add(Restrictions.Eq("Id", id)).SetMaxResults(1).List<T>().FirstOrDefault();
         }
 
-        public T FindById(Guid id)
+        public T FindById(int id)
         {
             return this.Session.Get<T>(id);
         }

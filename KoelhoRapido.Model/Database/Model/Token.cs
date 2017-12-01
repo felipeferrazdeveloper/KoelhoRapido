@@ -7,7 +7,7 @@ namespace KoelhoRapido.Model.Database.Model
 {
     public class Token
     {
-        public virtual Guid Id { get; set; }
+        public virtual int Id { get; set; }
         public virtual Cliente Cliente { get; set; }
         public virtual String Value { get; set; }
         public virtual DateTime ExpirationDateTime { get; set; }
@@ -37,7 +37,7 @@ namespace KoelhoRapido.Model.Database.Model
     {
         public TokenMap()
         {
-            Id(x => x.Id, m => m.Generator(Generators.Guid));
+            Id(x => x.Id, m => m.Generator(Generators.Increment));
             Property(x => x.Value);
             Property(x => x.ExpirationDateTime, m => m.Type(NHibernateUtil.DateTime));
             ManyToOne(x => x.Cliente, map =>
